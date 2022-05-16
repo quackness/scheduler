@@ -14,6 +14,7 @@ export default function Button(props) {
 
    return (<button className={buttonClass} 
    onClick={props.onClick} 
+   //props.[...] from index.js file
    disabled={props.disabled}
    >
       {props.children}
