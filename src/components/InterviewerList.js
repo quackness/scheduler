@@ -9,11 +9,11 @@ export default function InterviewerList(props) {
       key = {interviewer.id}
       name = {interviewer.name}
       avatar = {interviewer.avatar}
+       //if the persons id matches select it
+      selected = {interviewer.id === props.interviewer}
       //passing the function down through the comp.
       setInterviewer = {() => props.setInterviewer(interviewer.id)}
-      interviewer = {props.interviewer}   
-      //if the persons id matches select it
-      selected = {interviewer.id === props.interviewer}
+      // interviewer = {props.interviewer}   
     />
   })
   return (
