@@ -102,7 +102,7 @@ storiesOf("DayListItem", module) //Initiates Storybook and registers our DayList
       ))
       .add("Clickable", () => (
         <InterviewerListItem
-          // id={interviewer.id}
+          // id={interviewer.id}s
           name={interviewer.name}
           avatar={interviewer.avatar}
           setInterviewer={() => action("setInterviewer")(interviewer.id)}
