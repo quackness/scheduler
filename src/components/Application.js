@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "components/Application.scss";
 import DayList from "components/DayList";
+
 
 //array moved from stories
 const days = [
@@ -23,6 +24,7 @@ const days = [
 
 
 export default function Application(props) {
+  const [day, setDay] = useState('Monday');
   return (
     <main className="layout">
       <section className="sidebar">
@@ -36,10 +38,13 @@ export default function Application(props) {
           <DayList
             days = {days}
             //days array
-            day = {"Monday"}
-            //current day
-            setDay={day => console.log(day)}
-            //click
+            // day = {"Monday"} current day hardcoded, it got refactored with state
+            day = {day} 
+            //current day refactored with state
+            // setDay={day => console.log(day)}
+            //click before rafactoring with state 
+            setDay={setDay}
+            // component should also receive the function that can update the state
           />
         </nav>
         <img
