@@ -132,14 +132,16 @@ storiesOf("InterviewerList", module)
   .add("Selected", () => (
     <InterviewerList
       interviewers={interviewers}
-      interviewer={3}
+      // interviewer={3} changed to value below to follow the name convention
+      value={3}
     />
   ))
   .add("Clickable", () => (
     <InterviewerList
       id={interviewers}
       interviewers={interviewers}
-      setInterviewer={action("setInterviewer")}
+      // setInterviewer={action("setInterviewer")} changed to onChange to follow controlled name convention
+      onChange={action("setInterviewer")}
     />
   ));
 
