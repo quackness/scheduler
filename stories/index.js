@@ -158,6 +158,7 @@ storiesOf("InterviewerList", module)
   //he add() function accepts the name of the story as a string and a function 
   //that returns a React component.
     .add("Appointment", () => <Appointment />)
+    .add("Appointment with Time", () => <Appointment time="12pm" />);
 
 
 
