@@ -39,11 +39,13 @@ export default function Application(props) {
             days = {days}
             //days array
             // day = {"Monday"} current day hardcoded, it got refactored with state
-            day = {day} 
+            //changing day and setDay to value and onChange to mimic standard html <select>
+            //for code clarity: the name of the props is the same as keywords onChange event and value property
+            value = {day} 
             //current day refactored with state
             // setDay={day => console.log(day)}
             //click before rafactoring with state 
-            setDay={setDay}
+            onChange={setDay}
             // component should also receive the function that can update the state
           />
         </nav>
