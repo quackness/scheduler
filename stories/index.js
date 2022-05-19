@@ -11,6 +11,7 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
 import Appointment from "components/Appointment/index.js";
+import Header from "components/Appointment/index.js";
 
 
 storiesOf("Button", module)
@@ -158,7 +159,8 @@ storiesOf("InterviewerList", module)
   //he add() function accepts the name of the story as a string and a function 
   //that returns a React component.
     .add("Appointment", () => <Appointment />)
-    .add("Appointment with Time", () => <Appointment time="12pm" />);
+    .add("Appointment with Time", () => <Appointment time="12pm" />)
+    .add("Header", () => <Header time="12pm" />);
 
 
 
