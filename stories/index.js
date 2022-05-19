@@ -10,6 +10,7 @@ import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
+import Appointment from "components/Appointment/index.js";
 
 
 storiesOf("Button", module)
@@ -144,5 +145,22 @@ storiesOf("InterviewerList", module)
       onChange={action("setInterviewer")}
     />
   ));
+
+  //stories for Appointment
+  storiesOf("Appointment", module)
+  //storiesOf("string that labels the group", webpack module available on the global (per-file) scope)
+    .addParameters({
+  //The addParameters function can be chained to storiesOf and can be passed an object of parameters. 
+      backgrounds: [{ name: "white", value: "#fff", default: true }]
+    })
+  //Once this initial code has been set up, we can add stories by 
+  //chaining an add() function for any number of stories that we want to write.
+  //he add() function accepts the name of the story as a string and a function 
+  //that returns a React component.
+    .add("Appointment", () => <Appointment />)
+
+
+
+
 
     
