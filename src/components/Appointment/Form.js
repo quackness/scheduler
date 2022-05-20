@@ -7,6 +7,8 @@ export default function Form(props){
   //we add state to form it is the only place when those values will be changed
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
+ 
+
 
   return(
     <main className="appointment__card appointment__card--create">
@@ -27,13 +29,13 @@ export default function Form(props){
     </form>
     <InterviewerList 
       interviewers={props.interviewers}
-      // setInterviewer={() => onChange(props.interviewer)}
-      // onChange={setStudent(interviewer)}
-      // selected={interviewer.id === props.value}
-      onChange={() => props.onSave(props.interviewer)} 
-     
-    
-     
+      //selected interviewer for the state
+      value={interviewer}
+      
+      //define an event that can be triggered by the interviewerList component 
+      //in a diffrent file, it takes the id of the interviewer as an id
+      onChange={(interviewerId) => setInterviewer(interviewerId)}
+
     />
   </section>
   <section className="appointment__card-right">
