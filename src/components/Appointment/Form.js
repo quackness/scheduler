@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InterviewerList from "../InterviewerList.js";
 import Button from "../Button.js";
 
 
 export default function Form(props){
+  //we add state to form it is the only place when those values will be changed
+  const [student, setStudent] = useState(props.student || "");
+  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+
+
   return(
     <main className="appointment__card appointment__card--create">
   <section className="appointment__card-left">
@@ -17,6 +22,8 @@ export default function Form(props){
           This must be a controlled component
           your code goes here
         */
+       value = {student}
+       onChange={(nameEdit) => setStudent(nameEdit.target.value)}
       />
     </form>
     <InterviewerList 
