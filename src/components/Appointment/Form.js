@@ -8,8 +8,6 @@ export default function Form(props){
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
-
-
   return(
     <main className="appointment__card appointment__card--create">
   <section className="appointment__card-left">
@@ -32,7 +30,9 @@ export default function Form(props){
       // setInterviewer={() => onChange(props.interviewer)}
       // onChange={setStudent(interviewer)}
       // selected={interviewer.id === props.value}
-      setInterviewer={() => props.onChange(interviewer.id)} 
+      onChange={() => props.onSave(props.interviewer)} 
+     
+    
      
     />
   </section>
