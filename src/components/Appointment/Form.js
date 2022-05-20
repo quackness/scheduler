@@ -7,6 +7,10 @@ export default function Form(props){
   //we add state to form it is the only place when those values will be changed
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const reset = () => {
+    setInterviewer(null);
+    setStudent("");
+  }
  
 
   return(
@@ -41,8 +45,9 @@ export default function Form(props){
     <section className="appointment__actions">
 
       <Button danger onClick={() => {
-        setInterviewer(null)
-        setStudent("")
+        reset();
+        // setInterviewer(null)
+        // setStudent("")
         props.onCancel()}
       }
 
