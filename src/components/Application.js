@@ -1,27 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
+import axios from 'axios';
+
 
 
 //array moved from stories
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+//removed array to use axios fetching instead
+// const days = [
+//   {
+//     id: 1,
+//     name: "Monday",
+//     spots: 2,
+//   },
+//   {
+//     id: 2,
+//     name: "Tuesday",
+//     spots: 5,
+//   },
+//   {
+//     id: 3,
+//     name: "Wednesday",
+//     spots: 0,
+//   },
+// ];
 
 const appointments = {
   "1": {
@@ -65,7 +68,17 @@ const appointments = {
 
 
 export default function Application(props) {
-  const [day, setDay] = useState('Monday');
+  // const [day, setDay] = useState('Monday');
+  //commenting out above due to removing the array days
+  const [days, setDays] =  useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8001/api/days").then((response) => {
+      console.log(response);
+      setDays([...response.data])
+    }).catch(error => console.log(error));
+  },[])
+
 
   const appointmentComponents = Object.values(appointments).map((appointment) => {
     console.log(appointment);
@@ -93,11 +106,11 @@ export default function Application(props) {
             // day = {"Monday"} current day hardcoded, it got refactored with state
             //changing day and setDay to value and onChange to mimic standard html <select>
             //for code clarity: the name of the props is the same as keywords onChange event and value property
-            value = {day} 
+            value = {days} 
             //current day refactored with state
             // setDay={day => console.log(day)}
             //click before rafactoring with state 
-            onChange={setDay}
+            onChange={setDays}
             // component should also receive the function that can update the state
           />
         </nav>
