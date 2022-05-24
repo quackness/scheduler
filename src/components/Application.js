@@ -65,16 +65,22 @@ const appointments = {
   }
 };
 
-
+//click on the days
+//response.data vs .results
+//spread [1, 2, 3] || [[1,2,3]]
 
 export default function Application(props) {
-  // const [day, setDay] = useState('Monday');
-  //commenting out above due to removing the array days
+  //responsible for selecting the day on the sidebar, it holds the value for the day and
+  //a function to change it
+  const [day, setDay] = useState('Wednesday');
+  //it is empty at first and useEffect loads the days from api, fetch dayss
   const [days, setDays] =  useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:8001/api/days").then((response) => {
-      console.log(response);
+      console.log("===----", response);
+    
+      // setDays([...response.data])
       setDays([...response.data])
     }).catch(error => console.log(error));
   },[])
@@ -106,11 +112,11 @@ export default function Application(props) {
             // day = {"Monday"} current day hardcoded, it got refactored with state
             //changing day and setDay to value and onChange to mimic standard html <select>
             //for code clarity: the name of the props is the same as keywords onChange event and value property
-            value = {days} 
+            value = {day} 
             //current day refactored with state
             // setDay={day => console.log(day)}
             //click before rafactoring with state 
-            onChange={setDays}
+            onChange={setDay}
             // component should also receive the function that can update the state
           />
         </nav>

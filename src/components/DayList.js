@@ -4,6 +4,7 @@ import DayListItem from 'components/DayListItem.js';
 // import days from '../stories/index.js'
 
 export default function DayList(props) {
+  console.log("+++++++", props)
   const days = props.days.map((day) => {
     console.log(day)
   return (
