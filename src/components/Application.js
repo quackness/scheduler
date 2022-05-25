@@ -4,28 +4,6 @@ import DayList from "components/DayList";
 import Appointment from "components/Appointment";
 import axios from 'axios';
 
-
-
-//array moved from stories
-//removed array to use axios fetching instead
-// const days = [
-//   {
-//     id: 1,
-//     name: "Monday",
-//     spots: 2,
-//   },
-//   {
-//     id: 2,
-//     name: "Tuesday",
-//     spots: 5,
-//   },
-//   {
-//     id: 3,
-//     name: "Wednesday",
-//     spots: 0,
-//   },
-// ];
-
 const appointments = {
   "1": {
     id: 1,
@@ -65,48 +43,33 @@ const appointments = {
   }
 };
 
-//click on the days
-//response.data vs .results
-//spread [1, 2, 3] || [[1,2,3]]
-
 
 export default function Application(props) {
-  //responsible for selecting the day on the sidebar, it holds the value for the 
-  //day and a function to change it
-  // const [day, setDay] = useState('Wednesday');
-  //it is empty at first and useEffect loads the days from api, fetch dayss
-  // const [days, setDays] =  useState([]);
 
-  //two states objects above replaced with a single object
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
     appointments: {}
   });
-//changing monday to a day
-  const setDay = day => setState({ ...state, day });
+//step 2 update day property of the state with any day
+//this takes a state and changes it with a day param Tuesday
+  // const setDay = (day) => setState({ ...state, day });
+  //update days with api
+  // const setDays = (days) => setState({ ...state, days });
 
-  // const state = { day: "Monday", days: [] };
-  // setState({ ...state, day: "Tuesday" });
+  //refactor: remove state dependency and pass setState function
+  const setDay = (day) => setState(prev => ({ ...prev, day }));
+  const setDays = (days) => setState(prev => ({ ...prev, days }));
 
-  // const state = { day: "Monday", days: [] };
-  // setState(Object.assign({}, state, { day: "Tuesday" });
 
-  const setDays = (days) => {
-    setState(prev => ({ ...prev, days }));
-}
-
-//hook that fires after render, this is using setState function to update to Tuesday
   useEffect(() => {
-    //setState({ ...state, day: "Tuesday" });
+    //setState({ ...state, day: "Tuesday" });//update with setState to Tuesday after the render
     axios.get("/api/days").then((response) => {
-      console.log("===----", response)
-      setDays(response.data)
-      // setDays([...response.data])
-      //const state = { day: "Monday", days: [] }; we do not need it since we combined the states at the top
-      
-      //setDays([...response.data]) we do not need it since we combined the states at the top
+      //console.log("===----", response);
+      //call setDay
+      //setDay("Tuesday")
+      setDays([...response.data])
     }).catch(error => console.log(error));
   },[])
 
@@ -132,20 +95,10 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-          //properties accesses from state object so we need to use state.
+          //update properties with state. since we moved states to 1 object
             days = {state.days}
-            //days array
-            // day = {"Monday"} current day hardcoded, it got refactored with state
-            //changing day and setDay to value and onChange to mimic standard html <select>
-            //for code clarity: the name of the props is the same as keywords onChange event and value property
             value = {state.day} 
-            //current day refactored with state
-            // setDay={day => console.log(day)}
-            //click before rafactoring with state 
-            // onChange={setDay}
             onChange={setDay}
-            // setDay={.....}
-            // component should also receive the function that can update the state
           />
         </nav>
         <img
@@ -161,3 +114,6 @@ export default function Application(props) {
     </main>
   );
 }
+
+   
+
