@@ -72,9 +72,19 @@ const appointments = {
 export default function Application(props) {
   //responsible for selecting the day on the sidebar, it holds the value for the day and
   //a function to change it
-  const [day, setDay] = useState('Wednesday');
+  // const [day, setDay] = useState('Wednesday');
   //it is empty at first and useEffect loads the days from api, fetch dayss
-  const [days, setDays] =  useState([]);
+  // const [days, setDays] =  useState([]);
+
+  //two states objects above replaced with a single object
+  const [state, setState] = useState({
+    day: "Monday",
+    days: [],
+    // you may put the line below, but will have to remove/comment hardcoded appointments variable
+    appointments: {}
+  });
+
+
 
   useEffect(() => {
     axios.get("http://localhost:8001/api/days").then((response) => {
