@@ -1,4 +1,3 @@
-import React from "react";
 import { getAppointmentsForDay } from "helpers/selectors";
 
 const state = {
@@ -29,7 +28,7 @@ const state = {
       interview: { student: "Chad Takahashi", interviewer: 2 }
     }
   }
-}
+};
 
 test("getAppointmentsForDay returns an array", () => {
   const result = getAppointmentsForDay(state, "Monday");
@@ -56,7 +55,3 @@ test("getAppointmentsForDay returns an empty array when the day is not found", (
   const result = getAppointmentsForDay(state, "Wednesday");
   expect(result.length).toEqual(0);
 });
-
-
-
-
