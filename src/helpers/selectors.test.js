@@ -1,3 +1,4 @@
+import React from "react";
 import { getAppointmentsForDay } from "helpers/selectors";
 
 const state = {
@@ -30,7 +31,7 @@ const state = {
   }
 }
 
-test.only("getAppointmentsForDay returns an array", () => {
+test("getAppointmentsForDay returns an array", () => {
   const result = getAppointmentsForDay(state, "Monday");
   expect(Array.isArray(result)).toBe(true);
 });
