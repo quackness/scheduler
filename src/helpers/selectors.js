@@ -1,4 +1,4 @@
-export function getAppointmentsForDay(state, day) {
+export default function getAppointmentsForDay(state, day) {
 
   // test:return empty array when days data is empty, it is an array
   // so we can check its length
@@ -31,3 +31,16 @@ export function getAppointmentsForDay(state, day) {
   
   //alternative would be filter which returns an array, then we
   //would need to access for example foundDay[0].appointments;
+
+  export function getInterview(state, interview) {
+    //return null when interview is not booked 
+    if (interview === null) {
+     //   if (interview.interviewer === null) {
+      return null;
+    }
+    //returns an object with the interviewer data
+    return {
+      ...interview,
+      interviewer: state.interviewers[interview.interviewer]
+    }
+  };
