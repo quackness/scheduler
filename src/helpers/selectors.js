@@ -1,4 +1,4 @@
-export function getAppointmentsForDay(state, day) {
+export default function getAppointmentsForDay(state, day) {
 
 // test:return empty array when days data is empty, it is an array
 // so we can check its length

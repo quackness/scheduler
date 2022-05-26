@@ -3,6 +3,7 @@ import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
 import axios from 'axios';
+import getAppointmentsForDay from "helpers/selectors";
 
 // const appointments = {
 //   "1": {
@@ -50,12 +51,12 @@ export default function Application(props) {
     day: "Monday",
     days: [],
     // you may put the line below, but will have to remove/comment hardcoded appointments variable
-    appointments: {}
+    appointments: {},
+    interviewers: {}
   });
 
-  const dailyAppointments = [];
-
-
+  const dailyAppointments = getAppointmentsForDay(state, state.day)
+  console.log('dailyAppointments', dailyAppointments)
 
 //step 2 update day property of the state with any day
 //this takes a state and changes it with a day param Tuesday
@@ -65,16 +66,27 @@ export default function Application(props) {
 
   //refactor: remove state dependency and pass setState function
   const setDay = (day) => setState(prev => ({ ...prev, day }));
-  const setDays = (days) => setState(prev => ({ ...prev, days }));
+  //removind setDays wth its function call to remove data dependency
+  //const setDays = (days) => setState(prev => ({ ...prev, days }));
 
 
   useEffect(() => {
+    Promise.all([
     //setState({ ...state, day: "Tuesday" });//update with setState to Tuesday after the render
-    axios.get("/api/days").then((response) => {
-      //console.log("===----", response);
+    axios.get("/api/days"),
+    axios.get("api/appointments"),
+    axios.get("api/interviewers")
+    // axios.get("api/interviewers")
+    //destructuring an array of objects
+    ]).then(([days, appointments, interviewers]) => {
+      console.log("days =>", days);
+      console.log("appointments =>", appointments);
+      console.log("interviewers =>", interviewers);
+
+      setState(prev => ({...prev, days: days.data, appointments: appointments.data, interviewers: interviewers.data}));
       //call setDay
       //setDay("Tuesday")
-      setDays([...response.data])
+      //setDays([...response.data])
     }).catch(error => console.log(error));
   },[])
 
@@ -82,12 +94,13 @@ export default function Application(props) {
   //const appointmentComponents = Object.values(appointments).map((appointment) => {
     const appointmentComponents = dailyAppointments.map(appointment => {
     console.log(appointment);
-    return <Appointment
-    key={appointment.id} 
-    // spread the object into the props definition
-    {...appointment} 
-  />
-  }) 
+    return (
+      <Appointment
+        key={appointment.id} 
+        // spread the object into the props definition
+        {...appointment} 
+      />)
+    }) 
   
 
   return (
