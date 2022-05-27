@@ -3,7 +3,7 @@ import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
 import axios from 'axios';
-import getAppointmentsForDay from "helpers/selectors";
+import getAppointmentsForDay, { getInterviewersForDay } from "helpers/selectors";
 import { getInterview } from "helpers/selectors";
 
 
@@ -54,6 +54,7 @@ export default function Application(props) {
 
 
   //const appointmentComponents = Object.values(appointments).map((appointment) => {
+    const interviewers = getInterviewersForDay(state, state.day);
     const appointmentComponents = dailyAppointments.map(appointment => {
     console.log(appointment);
     const interview = getInterview(state, appointment.interview);
@@ -63,6 +64,7 @@ export default function Application(props) {
         // spread the object into the props definition
         {...appointment} 
         interview={interview}
+        interviewers = {interviewers}
       />)
     }) 
   

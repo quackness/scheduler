@@ -50,24 +50,26 @@ export default function getAppointmentsForDay(state, day) {
     if (state.days.length === 0) {
       return [];
     }
-  
+      //step 1 find the day that was passed
     const foundDay = state.days.find(findDay => findDay.name === day);
     console.log("find", foundDay)
-    
 
+    
     if (!foundDay) {
       return [];
     }
+
+
     //step 2: returnthe appointmets for the day that was passed
-    const appointmentsForTheDay = foundDay.appointments;
-    console.log("appointmentsForTheDay", appointmentsForTheDay)
+    const interviewersForTheDay = foundDay.interviewers;
+    console.log("interviewersForTheDay of Tuesday", interviewersForTheDay)
     //return appointmentsForTheDay;
     
-    
-    
-    const appointmentDetails = appointmentsForTheDay.map(id => state.appointments[id]);
   
-    return appointmentDetails;
+    const interviewersDetails = interviewersForTheDay.map(id => state.interviewers[id]);
+    console.log("interviewersDetails", interviewersDetails);
+  
+    return interviewersDetails;
 
 
   };
