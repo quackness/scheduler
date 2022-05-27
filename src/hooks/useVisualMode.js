@@ -14,6 +14,7 @@ export default function useVisualMode(initial) {
   //  change the mode with setMode function,   
    setMode(version);
    //When transition is called, we need to add the new mode to our history.
+   //here we are creating history we could work with t later
    setHistory( prev => [...prev, version]);
 
   }
@@ -24,9 +25,12 @@ export default function useVisualMode(initial) {
 //remove history -1
 //[one, two]
     setHistory( prev => [ ...prev.slice(0, -1)]);
+    if (history.length > 1) {
+      setMode(history[history.length - 2]);
+    }
     //[one, two, three] - 2 becouse setHistory is async
-    setMode(history[history.length - 2]);
-   
+    
+    
     // setHistory.push(newMode)
     // toPop.pop(setHistory -1)
     
