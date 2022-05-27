@@ -15,7 +15,7 @@ export default function useVisualMode(initial) {
   //setMode(version);
    //When transition is called, we need to add the new mode to our history.
    //here we are creating history so we can work with it later
-   console.log(replace)
+   console.log("test string")
    if (!replace) {
      console.log("replace is", replace);
    setHistory( prev => [...prev, version]);
