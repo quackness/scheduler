@@ -44,3 +44,4 @@ export default function getAppointmentsForDay(state, day) {
       interviewer: state.interviewers[interview.interviewer]
     }
   };
+
