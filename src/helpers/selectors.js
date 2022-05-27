@@ -45,3 +45,30 @@ export default function getAppointmentsForDay(state, day) {
     }
   };
 
+  export function getInterviewersForDay(state, day) {
+
+    if (state.days.length === 0) {
+      return [];
+    }
+  
+    const foundDay = state.days.find(findDay => findDay.name === day);
+    console.log("find", foundDay)
+    
+
+    if (!foundDay) {
+      return [];
+    }
+    //step 2: returnthe appointmets for the day that was passed
+    const appointmentsForTheDay = foundDay.appointments;
+    console.log("appointmentsForTheDay", appointmentsForTheDay)
+    //return appointmentsForTheDay;
+    
+    
+    
+    const appointmentDetails = appointmentsForTheDay.map(id => state.appointments[id]);
+  
+    return appointmentDetails;
+
+
+  };
+
