@@ -10,14 +10,18 @@ export default function useVisualMode(initial) {
   //history of the modes, so we can go backwards
   const [history, setHistory] = useState([initial]);
 
-  function transition(version) {//first {{}
+  function transition(version, replace = false) {//first {{}
   //  change the mode with setMode function,   
-   setMode(version);
+  setMode(version);
    //When transition is called, we need to add the new mode to our history.
-   //here we are creating history we could work with t later
+   //here we are creating history so we can work with it later
+   if (!replace) {
    setHistory( prev => [...prev, version]);
+   } 
+     
+   }
 
-  }
+  
   function back() {
     //push to history?
     //sets the 
@@ -29,8 +33,6 @@ export default function useVisualMode(initial) {
       setMode(history[history.length - 2]);
     }
     //[one, two, three] - 2 becouse setHistory is async
-    
-    
     // setHistory.push(newMode)
     // toPop.pop(setHistory -1)
     
