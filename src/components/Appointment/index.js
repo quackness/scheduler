@@ -9,6 +9,7 @@ import useVisualMode from "hooks/useVisualMode";
 
 
 export default function Appointment(props) {
+  console.log("props", props)
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -25,14 +26,12 @@ export default function Appointment(props) {
     };
     //Call the props.bookInterview function with the 
     //appointment id and interview as arguments from within the save function.
-     props.bookInterview(props.id,interview);
+    //console.log("props.bookInterview", props.bookInterview(props.id, interview))
+      props.bookInterview(props.id, interview)//interbview is from the line 23
+      transition(SHOW);//could this be done within the function pointers?
+      
+     //).catch((error) => console.log(error))
   }
-
-
-
-
-
-
 
   return (
     <article className="appointment">

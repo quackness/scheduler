@@ -57,21 +57,21 @@ export default function Application(props) {
 
 
  //Create a function called bookInterview inside the Application component.
- function bookInterview(id, interview) {
+ function bookInterview(id, interview) {//comes from index.js from the save function
    //create a variable representing each one. The lowest level is the interview object. 
   const appointment = {
-    ...state.appointments[id],
-    interview: { ...interview }
+    ...state.appointments[id],//from the api
+    interview: { ...interview }// interview obj we created
   };
 //Add the following code below the appointment object we created above.
   const appointments = {
-    ...state.appointments,
-    [id]: appointment
+    ...state.appointments,//from api
+    [id]: appointment//aading 2nd level
   };
   //call setState with your new state object.
-  setState({
+  setState({//overwriting the appointments/mutate
     ...state,
-    appointments
+    appointments//updating state
   })
   console.log(id, interview);
 }  
@@ -90,6 +90,7 @@ export default function Application(props) {
         {...appointment} 
         interview={interview}
         interviewers = {interviewers}
+        //thanks to map we will have a looop and this will be passed to each of the elements
         bookInterview = {bookInterview}
       />)
     }) 
@@ -121,7 +122,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {appointmentComponents}
-      <Appointment key="last" time="5pm" bookInterview={bookInterview} />
+      <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
