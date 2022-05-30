@@ -68,13 +68,8 @@ export default function Application(props) {
     ...state.appointments,//from api
     [id]: appointment//ading 2nd level
   };
-  //call setState with your new state object.
-  
- 
   console.log(id, interview);
-  //make a PUT request to the 
-  ///api/appointments/:id endpoint to update the database with the interview data.
-
+  //make a PUT request to the/api/appointments/:id endpoint to update the database with the interview data.
     return axios.put(`/api/appointments/${id}`, {interview})//updates the state when the promise resolves
       .then((response) => {
         setState({//overwriting the appointments/mutate
@@ -83,11 +78,13 @@ export default function Application(props) {
         })
     console.log("response =>",  response)
     })
+};  
+//add cancelInerview function
+function cancelInterview(id) {
+  console.log(id);
+};
 
-}  
 
-// Make the request with the correct endpoint using the appointment id, 
-// with the interview data in the body, we should receive a 204 No Content response.
 
 
 
@@ -105,6 +102,7 @@ export default function Application(props) {
         interviewers = {interviewers}
         //thanks to map we will have a looop and this will be passed to each of the elements
         bookInterview = {bookInterview}
+        cancelInterview = {cancelInterview}
       />)
     }) 
   
