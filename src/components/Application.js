@@ -58,6 +58,21 @@ export default function Application(props) {
 
  //Create a function called bookInterview inside the Application component.
  function bookInterview(id, interview) {
+   //create a variable representing each one. The lowest level is the interview object. 
+  const appointment = {
+    ...state.appointments[id],
+    interview: { ...interview }
+  };
+//Add the following code below the appointment object we created above.
+  const appointments = {
+    ...state.appointments,
+    [id]: appointment
+  };
+  //call setState with your new state object.
+  setState({
+    ...state,
+    appointments
+  })
   console.log(id, interview);
 }  
 

@@ -28,9 +28,6 @@ export default function Appointment(props) {
      props.bookInterview(props.id,interview);
   }
 
-  // Call the props.bookInterview function with the appointment id and interview as 
-  // arguments from within the save function. 
-  // Verify that the id and interview values are correct in the console output.
 
 
 
