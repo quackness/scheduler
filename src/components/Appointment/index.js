@@ -4,6 +4,7 @@ import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
 import Form from './Form';
+import Status from './Status';
 import useVisualMode from "hooks/useVisualMode";
 
 
@@ -13,6 +14,7 @@ export default function Appointment(props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
+  const SAVING = "SAVING";
 //add the custom hook
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -27,7 +29,9 @@ export default function Appointment(props) {
     //Call the props.bookInterview function with the 
     //appointment id and interview as arguments from within the save function.
     //console.log("props.bookInterview", props.bookInterview(props.id, interview))
-      props.bookInterview(props.id, interview).then(() => {//interview is from the function save
+    transition(SAVING);
+
+    props.bookInterview(props.id, interview).then(() => {//interview is from the function save
       transition(SHOW)});//could this be done within the function pointers?
       
      //).catch((error) => console.log(error))
@@ -51,6 +55,10 @@ export default function Appointment(props) {
           onCancel = {() => {back()}}
           onSave = {save}
           />)}
+
+          {mode === SAVING && <Status
+          //message = {message} 
+          />}
          
     </article>
   );
