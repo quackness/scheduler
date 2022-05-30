@@ -16,6 +16,7 @@ export default function Application(props) {
     interviewers: {}
   });
 
+
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   console.log('dailyAppointments', dailyAppointments)
 
@@ -29,6 +30,8 @@ export default function Application(props) {
   const setDay = (day) => setState(prev => ({ ...prev, day }));
   //removind setDays wth its function call to remove data dependency
   //const setDays = (days) => setState(prev => ({ ...prev, days }));
+
+ 
 
 
   useEffect(() => {
@@ -53,6 +56,12 @@ export default function Application(props) {
   },[])
 
 
+ //Create a function called bookInterview inside the Application component.
+ function bookInterview(id, interview) {
+  console.log(id, interview);
+}  
+
+
   //const appointmentComponents = Object.values(appointments).map((appointment) => {
     const interviewers = getInterviewersForDay(state, state.day);
     const appointmentComponents = dailyAppointments.map(appointment => {
@@ -65,6 +74,7 @@ export default function Application(props) {
         {...appointment} 
         interview={interview}
         interviewers = {interviewers}
+        bookInterview = {bookInterview}
       />)
     }) 
   
@@ -84,6 +94,7 @@ export default function Application(props) {
             days = {state.days}
             value = {state.day} 
             onChange={setDay}
+            //bookInterview={bookInterview}
           />
         </nav>
         <img
@@ -94,7 +105,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {appointmentComponents}
-      <Appointment key="last" time="5pm" />
+      <Appointment key="last" time="5pm" bookInterview={bookInterview}/>
       </section>
     </main>
   );
