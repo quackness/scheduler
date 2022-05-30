@@ -16,6 +16,27 @@ export default function Appointment(props) {
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  //Create a function called save in the Appointment component.
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    //Call the props.bookInterview function with the 
+    //appointment id and interview as arguments from within the save function.
+     props.bookInterview(props.id,interview);
+  }
+
+  // Call the props.bookInterview function with the appointment id and interview as 
+  // arguments from within the save function. 
+  // Verify that the id and interview values are correct in the console output.
+
+
+
+
+
+
   return (
     <article className="appointment">
         <Header time={props.time} />
@@ -32,6 +53,7 @@ export default function Appointment(props) {
           
           interviewers = {props.interviewers}
           onCancel = {() => {back()}}
+          onSave = {save}
           />)}
          
     </article>
