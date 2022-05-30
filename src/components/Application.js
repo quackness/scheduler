@@ -57,7 +57,7 @@ export default function Application(props) {
 
 
  //Create a function called bookInterview inside the Application component.
- function bookInterview(id, interview) {//comes from index.js from the save function
+ function bookInterview(id, interview) {// interview comes from index.js from the save function
    //create a variable representing each one. The lowest level is the interview object. 
   const appointment = {
     ...state.appointments[id],//from the api
@@ -66,15 +66,28 @@ export default function Application(props) {
 //Add the following code below the appointment object we created above.
   const appointments = {
     ...state.appointments,//from api
-    [id]: appointment//aading 2nd level
+    [id]: appointment//ading 2nd level
   };
   //call setState with your new state object.
-  setState({//overwriting the appointments/mutate
-    ...state,
-    appointments//updating state
-  })
+  
+ 
   console.log(id, interview);
+  //make a PUT request to the 
+  ///api/appointments/:id endpoint to update the database with the interview data.
+
+    return axios.put(`/api/appointments/${id}`, {interview})//updates the state when the promise resolves
+      .then((response) => {
+        setState({//overwriting the appointments/mutate
+          ...state,
+          appointments//updating state
+        })
+    console.log("response =>",  response)
+    })
+
 }  
+
+// Make the request with the correct endpoint using the appointment id, 
+// with the interview data in the body, we should receive a 204 No Content response.
 
 
 

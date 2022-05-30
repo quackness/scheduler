@@ -27,8 +27,8 @@ export default function Appointment(props) {
     //Call the props.bookInterview function with the 
     //appointment id and interview as arguments from within the save function.
     //console.log("props.bookInterview", props.bookInterview(props.id, interview))
-      props.bookInterview(props.id, interview)//interbview is from the line 23
-      transition(SHOW);//could this be done within the function pointers?
+      props.bookInterview(props.id, interview).then(() => {//interview is from the function save
+      transition(SHOW)});//could this be done within the function pointers?
       
      //).catch((error) => console.log(error))
   }
