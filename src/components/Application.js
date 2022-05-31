@@ -80,12 +80,29 @@ export default function Application(props) {
     })
 };  
 //add cancelInerview function
+//axios delete to delete interview
 function cancelInterview(id) {
   console.log(id);
+  const appointment = {
+    ...state.appointments[id],
+    interview: null
+  };
+  const appointments = {
+    ...state.appointments,
+    [id]: appointment//adding the appointment from the var above
+  }
+return axios.delete(`/api/appointments/${id}`, appointment)
+.then((response) => {
+  setState({//modify state
+  ...state,
+  appointments
+})
+}
+)
 };
 
 
-
+console.log("daily", dailyAppointments);
 
 
   //const appointmentComponents = Object.values(appointments).map((appointment) => {
@@ -93,11 +110,13 @@ function cancelInterview(id) {
     const appointmentComponents = dailyAppointments.map(appointment => {
     console.log(appointment);
     const interview = getInterview(state, appointment.interview);
+    console.log("interview", interview);
     return (
       <Appointment
         key={appointment.id} 
         // spread the object into the props definition
-        {...appointment} 
+        id = {appointment.id}
+        time = {appointment.time}
         interview={interview}
         interviewers = {interviewers}
         //thanks to map we will have a looop and this will be passed to each of the elements
