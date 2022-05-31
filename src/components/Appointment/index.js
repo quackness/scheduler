@@ -5,6 +5,7 @@ import Show from './Show';
 import Empty from './Empty';
 import Form from './Form';
 import Status from './Status';
+import Confirm from './Confirm';
 import useVisualMode from "hooks/useVisualMode";
 
 
@@ -15,6 +16,8 @@ export default function Appointment(props) {
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
+  const DELETING = "DELETING";
+  const CONFIRM = "CONFIRM";
 //add the custom hook
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -37,6 +40,12 @@ export default function Appointment(props) {
      //).catch((error) => console.log(error))
   }
 
+  function removeInterview() {
+    transition(DELETING)
+    props.cancelInterview(props.id).then(() => transition(EMPTY))
+    console.log("clicked")
+  }
+
   return (
     <article className="appointment">
         <Header time={props.time} />
@@ -46,7 +55,8 @@ export default function Appointment(props) {
               student={props.interview.student}
               interviewer={props.interview.interviewer}
               onEdit={() => {}}
-              onDelete={() => {}}
+              //instead of deleting it will go to the CONFIRM
+              onDelete={() => transition(CONFIRM)}
               />
           )}
           {mode === CREATE && (<Form 
@@ -57,7 +67,18 @@ export default function Appointment(props) {
           />)}
 
           {mode === SAVING && <Status
-          //message = {message} 
+          message={"Saving"}
+          />}
+
+          {mode === DELETING && <Status 
+          message={"Deleting appointment"}
+          />}
+
+          {mode === CONFIRM && <Confirm
+          message={"Are you sure you want to delete this interview?"}
+          onConfirm={removeInterview}
+          onCancel={back}//back is coming from a custom hook
+
           />}
          
     </article>
