@@ -18,6 +18,7 @@ export default function Appointment(props) {
   const SAVING = "SAVING";
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
+  const EDIT = "EDIT";
 //add the custom hook
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
