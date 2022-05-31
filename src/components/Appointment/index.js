@@ -6,6 +6,7 @@ import Empty from './Empty';
 import Form from './Form';
 import Status from './Status';
 import Confirm from './Confirm';
+import Error from './Error';
 import useVisualMode from "hooks/useVisualMode";
 
 
@@ -19,6 +20,9 @@ export default function Appointment(props) {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE  = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
+
 //add the custom hook
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -34,17 +38,16 @@ export default function Appointment(props) {
     //appointment id and interview as arguments from within the save function.
     //console.log("props.bookInterview", props.bookInterview(props.id, interview))
     transition(SAVING);
-
     props.bookInterview(props.id, interview).then(() => {//interview is from the function save
-      transition(SHOW)});//could this be done within the function pointers?
-      
-     //).catch((error) => console.log(error))
+      transition(SHOW)})//could this be done within the function pointers?
+    .catch((error) => transition(ERROR_SAVE))
   }
 
   function removeInterview() {
     transition(DELETING)
     props.cancelInterview(props.id).then(() => transition(EMPTY))
     console.log("clicked")
+    .catch((error) => transition(ERROR_DELETE))
   }
 
   //when we need to change the interiview
@@ -91,6 +94,14 @@ export default function Appointment(props) {
           interviewers = {props.interviewers}
           onCancel = {() => {back()}}
           onSave = {save}
+          />)}
+
+          {mode === ERROR_DELETE && (<Error
+          message={"Cannot cancel appointment"}
+          />)}
+
+        {mode === ERROR_SAVE && (<Error
+          message={"Cannot save appointment"}
           />)}
          
     </article>
