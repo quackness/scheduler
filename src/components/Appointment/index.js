@@ -47,6 +47,11 @@ export default function Appointment(props) {
     console.log("clicked")
   }
 
+  //when we need to change the interiview
+  function editInterview() {
+    transition(EDIT);
+  }
+
   return (
     <article className="appointment">
         <Header time={props.time} />
@@ -55,7 +60,7 @@ export default function Appointment(props) {
             <Show
               student={props.interview.student}
               interviewer={props.interview.interviewer}
-              onEdit={() => {}}
+              onEdit={editInterview}
               //instead of deleting it will go to the CONFIRM
               onDelete={() => transition(CONFIRM)}
               />
@@ -79,8 +84,14 @@ export default function Appointment(props) {
           message={"Are you sure you want to delete this interview?"}
           onConfirm={removeInterview}
           onCancel={back}//back is coming from a custom hook
-
           />}
+
+          {mode === EDIT && (<Form 
+          student={props.interview.student}
+          interviewers = {props.interviewers}
+          onCancel = {() => {back()}}
+          onSave = {save}
+          />)}
          
     </article>
   );
