@@ -41,14 +41,14 @@ export default function Appointment(props) {
     props.bookInterview(props.id, interview)
     .then(() => //interview is from the function save
     transition(SHOW))//could this be done within the function pointers?
-    .catch(error => transition(ERROR_SAVE, true));
+    .catch(() => transition(ERROR_SAVE, true));
   }
 
   function removeInterview() {
     transition(DELETING, true)
-    props.cancelInterview(props.id).then(() => transition(EMPTY))
-    console.log("clicked")
-    .catch(error => transition(ERROR_DELETE, true))
+    props.cancelInterview(props.id)
+    .then(() => transition(EMPTY))
+    .catch(() => transition(ERROR_DELETE, true))
   }
 
   //when we need to change the interiview
@@ -97,15 +97,15 @@ export default function Appointment(props) {
           onSave = {save}
           />)}
 
-          {mode === ERROR_DELETE && (<Error
+          {mode === ERROR_DELETE && <Error
           message={"Cannot cancel appointment"}
           onClose={back}
-          />)}
+          />}
 
-        {mode === ERROR_SAVE && (<Error
+        {mode === ERROR_SAVE && <Error
           message={"Cannot save appointment"}
           onClose={back}
-          />)}
+          />}
          
     </article>
   );
