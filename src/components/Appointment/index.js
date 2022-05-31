@@ -38,16 +38,17 @@ export default function Appointment(props) {
     //appointment id and interview as arguments from within the save function.
     //console.log("props.bookInterview", props.bookInterview(props.id, interview))
     transition(SAVING);
-    props.bookInterview(props.id, interview).then(() => {//interview is from the function save
-      transition(SHOW)})//could this be done within the function pointers?
-    .catch((error) => transition(ERROR_SAVE))
+    props.bookInterview(props.id, interview)
+    .then(() => //interview is from the function save
+    transition(SHOW))//could this be done within the function pointers?
+    .catch(error => transition(ERROR_SAVE, true));
   }
 
   function removeInterview() {
-    transition(DELETING)
+    transition(DELETING, true)
     props.cancelInterview(props.id).then(() => transition(EMPTY))
     console.log("clicked")
-    .catch((error) => transition(ERROR_DELETE))
+    .catch(error => transition(ERROR_DELETE, true))
   }
 
   //when we need to change the interiview
