@@ -1,130 +1,45 @@
-import React, { useState, useEffect } from "react";
+//import React, { useState, useEffect } from "react";
+import React from "react";
 import "components/Application.scss";
 import DayList from "components/DayList";
 import Appointment from "components/Appointment";
-import axios from 'axios';
+// import axios from 'axios';
 import getAppointmentsForDay, { getInterviewersForDay } from "helpers/selectors";
 import { getInterview } from "helpers/selectors";
+import useApplicationData from "hooks/useApplicationData";
 
 
 export default function Application(props) {
-
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: {}
-  });
-
+//state moved to hooks folder
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   console.log('dailyAppointments', dailyAppointments)
 
-//step 2 update day property of the state with any day
-//this takes a state and changes it with a day param Tuesday
-  // const setDay = (day) => setState({ ...state, day });
-  //update days with api
-  // const setDays = (days) => setState({ ...state, days });
+  const interviewers = getInterviewersForDay(state, state.day);
 
-  //refactor: remove state dependency and pass setState function
-  const setDay = (day) => setState(prev => ({ ...prev, day }));
-  //removind setDays wth its function call to remove data dependency
-  //const setDays = (days) => setState(prev => ({ ...prev, days }));
-
- 
-
-
-  useEffect(() => {
-    Promise.all([
-    //setState({ ...state, day: "Tuesday" });//update with setState to Tuesday after the render
-    axios.get("/api/days"),
-    axios.get("api/appointments"),
-    axios.get("api/interviewers")
-    // axios.get("api/interviewers")
-    //destructuring an array of objects
-    ]).then(([days, appointments, interviewers]) => {
-      console.log("days =>", days);
-      console.log("appointments =>", appointments);
-      console.log("interviewers =>", interviewers);
-      //try with array[0].data
-
-      setState(prev => ({...prev, days: days.data, appointments: appointments.data, interviewers: interviewers.data}));
-      //call setDay
-      //setDay("Tuesday")
-      //setDays([...response.data])
-    }).catch(error => console.log(error));
-  },[])
-
-
- //Create a function called bookInterview inside the Application component.
- function bookInterview(id, interview) {// interview comes from index.js from the save function
-   //create a variable representing each one. The lowest level is the interview object. 
-  const appointment = {
-    ...state.appointments[id],//from the api
-    interview: { ...interview }// interview obj we created
-  };
-//Add the following code below the appointment object we created above.
-  const appointments = {
-    ...state.appointments,//from api
-    [id]: appointment//ading 2nd level
-  };
-  console.log(id, interview);
-  //make a PUT request to the/api/appointments/:id endpoint to update the database with the interview data.
-    return axios.put(`/api/appointments/${id}`, {interview})//updates the state when the promise resolves
-      .then((response) => {
-        setState({//overwriting the appointments/mutate
-          ...state,
-          appointments//updating state
-        })
-    console.log("response =>",  response)
-    })
-};  
-//add cancelInerview function
-//axios delete to delete interview
-function cancelInterview(id) {
-  console.log(id);
-  const appointment = {
-    ...state.appointments[id],
-    interview: null
-  };
-  const appointments = {
-    ...state.appointments,
-    [id]: appointment//adding the appointment from the var above
-  }
-return axios.delete(`/api/appointments/${id}`, appointment)
-.then((response) => {
-  setState({//modify state
-  ...state,
-  appointments
-})
-}
-)
-};
-
-
-console.log("daily", dailyAppointments);
-
-
-  //const appointmentComponents = Object.values(appointments).map((appointment) => {
-    const interviewers = getInterviewersForDay(state, state.day);
-    const appointmentComponents = dailyAppointments.map(appointment => {
+  const appointmentComponents = dailyAppointments.map(
+    
+    appointment => {
     console.log(appointment);
-    const interview = getInterview(state, appointment.interview);
-    console.log("interview", interview);
     return (
       <Appointment
         key={appointment.id} 
-        // spread the object into the props definition
-        id = {appointment.id}
-        time = {appointment.time}
-        interview={interview}
+        // id = {appointment.id}
+        // time = {appointment.time}
+        {...appointment}
+        //interview={interview}
+        interview={getInterview(state, appointment.interview)}
         interviewers = {interviewers}
-        //thanks to map we will have a looop and this will be passed to each of the elements
         bookInterview = {bookInterview}
         cancelInterview = {cancelInterview}
       />)
     }) 
-  
 
   return (
     <main className="layout">
