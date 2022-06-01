@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import getAppointmentsForDay from "helpers/selectors";
+
+
 
 // Our useApplicationData Hook will return an object with four keys:
 
@@ -7,7 +10,7 @@ import axios from "axios";
 //     The setDay action can be used to set the current day.
 //     The bookInterview action makes an HTTP request and updates the local state.
 //     The cancelInterview action makes an HTTP request and updates the local state.
-export default function useApplicationData(data) {
+export default function useApplicationData(props) {
 
   const [state, setState] = useState({
     day: "Monday",
@@ -16,8 +19,10 @@ export default function useApplicationData(data) {
     interviewers: {}
   });
 
-  // const dailyAppointments = getAppointmentsForDay(state, state.day)
-  // console.log('dailyAppointments', dailyAppointments)
+
+
+  const dailyAppointments = getAppointmentsForDay(state, state.day)
+  console.log('dailyAppointments', dailyAppointments)
 
   const setDay = (day) => setState(prev => ({ ...prev, day }));
 
@@ -25,12 +30,9 @@ export default function useApplicationData(data) {
 
   useEffect(() => {
     Promise.all([
-    //setState({ ...state, day: "Tuesday" });//update with setState to Tuesday after the render
     axios.get("/api/days"),
     axios.get("api/appointments"),
     axios.get("api/interviewers")
-    // axios.get("api/interviewers")
-    //destructuring an array of objects
     ]).then(([days, appointments, interviewers]) => {
       console.log("days =>", days);
       console.log("appointments =>", appointments);
@@ -86,13 +88,11 @@ return axios.delete(`/api/appointments/${id}`, appointment)
 };
 console.log("daily", dailyAppointments);
 
-
-const interview = getInterview(state, appointment.interview);
-    console.log("interview", interview);
-
-
-
-
-
+return {
+  state,
+  setDay,
+  bookInterview,
+  cancelInterview
+}
 
 }

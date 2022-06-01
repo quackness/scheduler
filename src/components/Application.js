@@ -9,6 +9,7 @@ import { getInterview } from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
 
 
+
 export default function Application(props) {
 //state moved to hooks folder
   const {
@@ -18,28 +19,21 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
-  const dailyAppointments = getAppointmentsForDay(state, state.day)
-  console.log('dailyAppointments', dailyAppointments)
-
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
   const appointmentComponents = dailyAppointments.map(
-    
     appointment => {
-    console.log(appointment);
     return (
       <Appointment
-        key={appointment.id} 
-        // id = {appointment.id}
-        // time = {appointment.time}
+        key={appointment.id}
         {...appointment}
-        //interview={interview}
         interview={getInterview(state, appointment.interview)}
         interviewers = {interviewers}
         bookInterview = {bookInterview}
         cancelInterview = {cancelInterview}
-      />)
-    }) 
+      />);
+    }); 
 
   return (
     <main className="layout">
@@ -52,11 +46,11 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-          //update properties with state. since we moved states to 1 object
+   
             days = {state.days}
             value = {state.day} 
             onChange={setDay}
-            //bookInterview={bookInterview}
+         
           />
         </nav>
         <img
