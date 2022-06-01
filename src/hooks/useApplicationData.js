@@ -3,14 +3,7 @@ import axios from "axios";
 import getAppointmentsForDay from "helpers/selectors";
 
 
-
-// Our useApplicationData Hook will return an object with four keys:
-
-//     The state object will maintain the same structure.
-//     The setDay action can be used to set the current day.
-//     The bookInterview action makes an HTTP request and updates the local state.
-//     The cancelInterview action makes an HTTP request and updates the local state.
-export default function useApplicationData(props) {
+export default function useApplicationData() {
 
   const [state, setState] = useState({
     day: "Monday",
@@ -18,8 +11,6 @@ export default function useApplicationData(props) {
     appointments: {},
     interviewers: {}
   });
-
-
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   console.log('dailyAppointments', dailyAppointments)
@@ -44,6 +35,7 @@ export default function useApplicationData(props) {
 
   //Create a function called bookInterview inside the Application component.
  function bookInterview(id, interview) {// interview comes from index.js from the save function
+ console.log(id, interview);
   //create a variable representing each one. The lowest level is the interview object. 
  const appointment = {
    ...state.appointments[id],//from the api
@@ -58,6 +50,7 @@ export default function useApplicationData(props) {
  //make a PUT request to the/api/appointments/:id endpoint to update the database with the interview data.
    return axios.put(`/api/appointments/${id}`, {interview})//updates the state when the promise resolves
      .then((response) => {
+      spotsRemaining('add')
        setState({//overwriting the appointments/mutate
          ...state,
          appointments//updating state
@@ -79,6 +72,7 @@ function cancelInterview(id) {
  }
 return axios.delete(`/api/appointments/${id}`, appointment)
 .then((response) => {
+ spotsRemaining('delete')
  setState({//modify state
  ...state,
  appointments
@@ -87,6 +81,33 @@ return axios.delete(`/api/appointments/${id}`, appointment)
 )
 };
 console.log("daily", dailyAppointments);
+
+
+//the update should happen when we book or cancel the appt.
+//do it when the server confirms it 
+//t should be done in the bookInterview and cancelInterview 
+//functions, and applied in the .then part of the AJAX request.
+//we need to update days.spots object (state) based on if the appointment changes
+//if we book int then days. spots should -1, if we delete then +1
+
+function spotsRemaining(action) {
+
+ console.log('spot details ---> ', state)
+ for(let day of state.days) {
+   if(state['day'] === day['name']) {//
+    //  console.log('daily spot-->', day)
+    if(action === 'add') {
+      day['spots'] = day['spots'] - 1;
+    } else if (action === 'delete') {
+      day['spots'] = day['spots'] + 1;
+    } 
+      break;
+   }
+  }
+ console.log('daily appointment--->', dailyAppointments)
+}
+
+
 
 return {
   state,
