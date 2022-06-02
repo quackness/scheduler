@@ -87,12 +87,13 @@ export default function useApplicationData() {
       )
   };
   console.log("daily", dailyAppointments);
-
+//create function which updates the spots based on the add and delete
   const updateSpots = function (state, appointments) {
     return state.days.map(day => {
       if (day.name === state.day) {
         return {
           ...day,
+          //get the number of spots that do not have interview: null
           spots: day.appointments.map(id => appointments[id]).filter(({ interview }) => !interview).length,
         }
       }
