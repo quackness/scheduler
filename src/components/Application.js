@@ -35,6 +35,9 @@ export default function Application(props) {
       />);
     }); 
 
+    //passing a function as a prop: give a name example  cancelInterview = {cancelInterview}
+    //2. bookInterview = {() => example(a,b)}
+
   return (
     <main className="layout">
       <section className="sidebar">
