@@ -49,12 +49,12 @@ export default function Form(props){
         props.onCancel()}
       }
       >Cancel</Button>
-      <Button confirm onClick={(e) => {
-        e.preventDefault()
-        if (!interviewer) {
-          alert("Select interviewer")
-          return;
-        }
+      <Button confirm onClick={() => {
+        // e.preventDefault()
+        // if (!interviewer) {
+        //   alert("Select interviewer")
+        //   return;
+        // }
         props.onSave(student, interviewer)
         // onClick={props.onDelete}
       }}>Save</Button>
