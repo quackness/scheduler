@@ -10,7 +10,7 @@ import useApplicationData from "hooks/useApplicationData";
 
 
 export default function Application(props) {
-//state moved to hooks folder
+  //state moved to hooks folder
   const {
     state,
     setDay,
@@ -24,19 +24,19 @@ export default function Application(props) {
 
   const appointmentComponents = dailyAppointments.map(
     appointment => {
-    return (
-      <Appointment
-        key={appointment.id}
-        {...appointment}
-        interview={getInterview(state, appointment.interview)}
-        interviewers = {interviewers}
-        bookInterview = {bookInterview}
-        cancelInterview = {cancelInterview}
-      />);
-    }); 
+      return (
+        <Appointment
+          key={appointment.id}
+          {...appointment}
+          interview={getInterview(state, appointment.interview)}
+          interviewers={interviewers}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+        />);
+    });
 
-    //passing a function as a prop: give a name example  cancelInterview = {cancelInterview}
-    //2. bookInterview = {() => example(a,b)}
+  //passing a function as a prop: give a name example  cancelInterview = {cancelInterview}
+  //2. bookInterview = {() => example(a,b)}
 
   return (
     <main className="layout">
@@ -49,11 +49,11 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-   
-            days = {state.days}
-            value = {state.day} 
+
+            days={state.days}
+            value={state.day}
             onChange={setDay}
-         
+
           />
         </nav>
         <img
@@ -64,11 +64,11 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {appointmentComponents}
-      <Appointment key="last" time="5pm" />
+        <Appointment key="last" time="5pm" />
       </section>
     </main>
   );
 }
 
-   
+
 
