@@ -16,7 +16,7 @@ export default function useApplicationData() {
   console.log('dailyAppointments', dailyAppointments)
 
   const setDay = (day) => setState(prev => ({ ...prev, day }));
-  
+
 
   useEffect(() => {
     Promise.all([
@@ -75,7 +75,7 @@ export default function useApplicationData() {
       [id]: appointment//adding the appointment from the var above
     }
 
- 
+
     return axios.delete(`/api/appointments/${id}`, appointment)
       .then((response) => {
         setState({//modify state
@@ -87,7 +87,7 @@ export default function useApplicationData() {
       )
   };
   console.log("daily", dailyAppointments);
-//create function which updates the spots based on the add and delete
+  //create function which updates the spots based on the add and delete
   const updateSpots = function (state, appointments) {
     return state.days.map(day => {
       if (day.name === state.day) {
