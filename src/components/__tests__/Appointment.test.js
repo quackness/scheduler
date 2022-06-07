@@ -3,6 +3,8 @@ import { render } from '@testing-library/react';
 import Appointment from 'components/Appointment';
 
 //add test
-it("renders without crashing", () => {
-  render(<Appointment />);
+describe("Appointment", () => {
+  it("renders without crashing", () => {
+    render(<Appointment />);
+  });
 });
