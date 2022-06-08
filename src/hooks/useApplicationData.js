@@ -13,7 +13,7 @@ export default function useApplicationData() {
   });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
-  console.log('dailyAppointments', dailyAppointments)
+  //console.log('dailyAppointments', dailyAppointments)
 
   const setDay = (day) => setState(prev => ({ ...prev, day }));
 
@@ -27,9 +27,9 @@ export default function useApplicationData() {
       const days = all[0].data
       const appointments = all[1].data
       const interviewers = all[2].data
-      console.log("days =>", days);
-      console.log("appointments =>", appointments);
-      console.log("interviewers =>", interviewers)
+      // console.log("days =>", days);
+      // console.log("appointments =>", appointments);
+      // console.log("interviewers =>", interviewers)
       setState(prev => ({ ...prev, days, appointments, interviewers }));
     }).catch(error => console.log(error));
   }, [])
@@ -37,7 +37,7 @@ export default function useApplicationData() {
 
   //Create a function called bookInterview inside the Application component.
   function bookInterview(id, interview) {// interview comes from index.js from the save function
-    console.log(id, interview);
+    //console.log(id, interview);
     //create a variable representing each one. The lowest level is the interview object. 
     const appointment = {
       ...state.appointments[id],//from the api
@@ -48,7 +48,7 @@ export default function useApplicationData() {
       ...state.appointments,//from api
       [id]: appointment//ading 2nd level
     };
-    console.log(id, interview);
+    //console.log(id, interview);
     //make a PUT request to the/api/appointments/:id endpoint to update the database with the interview data.
     return axios.put(`/api/appointments/${id}`, { interview })//updates the state when the promise resolves
       .then((response) => {
@@ -59,13 +59,13 @@ export default function useApplicationData() {
           appointments,//updating state
           days: updateSpots(state, appointments)
         })
-        console.log("response =>", response)
+        //console.log("response =>", response)
       })
   };
   //add cancelInerview function
   //axios delete to delete interview
   function cancelInterview(id) {
-    console.log(id);
+    //console.log(id);
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -86,7 +86,7 @@ export default function useApplicationData() {
       }
       )
   };
-  console.log("daily", dailyAppointments);
+  //console.log("daily", dailyAppointments);
   //create function which updates the spots based on the add and delete
   const updateSpots = function (state, appointments) {
     return state.days.map(day => {
