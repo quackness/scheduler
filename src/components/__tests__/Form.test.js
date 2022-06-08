@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup, getByPlaceholderText, fireEvent } from "@testing-library/react";
+import { render, cleanup, fireEvent } from "@testing-library/react";
 import Form from "components/Appointment/Form";
 
 afterEach(cleanup);
@@ -70,5 +70,21 @@ describe("Form", () => {
     expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
   });
 
-});
+  it("submits the name entered by the user", () => {
+    const onSave = jest.fn();
+    const { getByText, getByPlaceholderText } = render(
+      <Form interviewers={interviewers} onSave={onSave} student="Lydia Miller-Jones" />
+    );
+  
+    const input = getByPlaceholderText("Enter Student Name");
+  
+    fireEvent.change(input, { target: { value: "Lydia Miller-Jones" } });
+    fireEvent.click(getByText("Save"));
+  
+    expect(onSave).toHaveBeenCalledTimes(1);
+    expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", null);
+  });
+  
+  
 
+});
