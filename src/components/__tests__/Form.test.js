@@ -32,7 +32,7 @@ describe("Form", () => {
     const onSave = jest.fn()
     /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the student prop should be blank or undefined */
     const { getByText } = render(
-      <Form interviewers={interviewers} onSave={onSave} student={undefined}/>
+      <Form interviewers={interviewers} onSave={onSave} />
     )
    
     /* 3. Click the save button */
@@ -47,7 +47,7 @@ describe("Form", () => {
     const onSave = jest.fn()
     /* 2. Render the Form with interviewers and the onSave mock function passed as an onSave prop, the interviewer prop should be null */
     const { getByText } = render(
-      <Form interviewers={interviewers} onSave={onSave} name="Lydia Miller-Jones" />
+      <Form interviewers={interviewers} onSave={onSave} student="Lydia Miller-Jones" />
     )
     /* 3. Click the save button */
     fireEvent.click(getByText("Save"));
@@ -59,16 +59,19 @@ describe("Form", () => {
   it("calls onSave function when the name and interviewer is defined", () => {
     /* 1. Create the mock onSave function */
     const onSave = jest.fn();
+    const myInterviewer = interviewers[0];
+    //console.log("myInterviewer", myInterviewer)
     /* 2. Render the Form with interviewers, name and the onSave mock function passed as an onSave prop */
     const { queryByText, getByText } = render(
       <Form 
-        interviewers = {interviewers}
-        onSave = {onSave}
-        name = "Lydia Miller-Jones"
-        interviewer={interviewers[0]}
+        interviewers={interviewers}
+        onSave={onSave}
+        student="Lydia Miller-Jones"
+        interviewer={myInterviewer.id}
+        //the .id is taken from eg. selected={interviewer.id === props.value} 
       />
     )
-    /* 3. Click the save button */
+  
     fireEvent.click(getByText("Save"));
   
     expect(queryByText(/student name cannot be blank/i)).toBeNull();
