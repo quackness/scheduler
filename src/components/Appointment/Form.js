@@ -70,8 +70,9 @@ export default function Form(props) {
           <Button confirm onClick={(e) => {
             e.preventDefault()
             validate()
-            }
-          }>Save</Button>
+          }}>
+            Save
+          </Button>
         </section>
       </section>
     </main>
