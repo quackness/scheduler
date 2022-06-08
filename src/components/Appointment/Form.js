@@ -7,10 +7,20 @@ export default function Form(props) {
   //we add state to form it is the only place when those values will be changed
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [error, setError] = useState("");
+
   const reset = () => {
     setInterviewer(null);
     setStudent("");
   };
+
+  function validate() {
+    if (student === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+    props.onSave(student, interviewer);
+  }
 
   return (
     <main className="appointment__card appointment__card--create">
@@ -29,6 +39,7 @@ export default function Form(props) {
             onChange={(nameEdit) => setStudent(nameEdit.target.value)}
             data-testid="student-name-input"
           />
+          <section className="appointment__validation">{error}</section>
         </form>
         <InterviewerList
           interviewers={props.interviewers}
