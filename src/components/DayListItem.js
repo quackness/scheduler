@@ -19,7 +19,7 @@ export default function DayListItem(props) {
   }
 
   return (
-    <li className={dayClass} onClick={() => props.setDay(props.name)}>
+    <li data-testid="day" className={dayClass} onClick={() => props.setDay(props.name)}>
     {/* https://flex-web.compass.lighthouselabs.ca/workbooks/flex-m07w17/activities/899?journey_step=54&workbook=22 */}
     {/* <li className={dayClass} onClick={() => props.setDay(props.name)} selected={props.selected}></li> */}
     {/* li is the day item */}
