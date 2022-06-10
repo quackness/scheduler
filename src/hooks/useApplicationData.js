@@ -13,7 +13,6 @@ export default function useApplicationData() {
   });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
-  //console.log('dailyAppointments', dailyAppointments)
 
   const setDay = (day) => setState(prev => ({ ...prev, day }));
 
@@ -24,63 +23,49 @@ export default function useApplicationData() {
       axios.get("/api/appointments"),
       axios.get("/api/interviewers")
     ]).then((all) => {
-      console.log("ALL =>", all)
       const days = all[0].data
-      console.log("days =>", days);
       const appointments = all[1].data
-      console.log("appointments =>", appointments);
       const interviewers = all[2].data
-      console.log("interviewers =>", interviewers)
-    
       setState(prev => ({ ...prev, days, appointments, interviewers }));
     }).catch(error => console.log(error));
   }, [])
 
 
-  //Create a function called bookInterview inside the Application component.
-  function bookInterview(id, interview) {// interview comes from index.js from the save function
-    //console.log(id, interview);
-    //create a variable representing each one. The lowest level is the interview object. 
+  function bookInterview(id, interview) {
     const appointment = {
-      ...state.appointments[id],//from the api
-      interview: { ...interview }// interview obj we created
+      ...state.appointments[id],
+      interview: { ...interview }
     };
-    //Add the following code below the appointment object we created above.
+
     const appointments = {
-      ...state.appointments,//from api
-      [id]: appointment//ading 2nd level
+      ...state.appointments,
+      [id]: appointment
     };
-    //console.log(id, interview);
-    //make a PUT request to the/api/appointments/:id endpoint to update the database with the interview data.
-    return axios.put(`/api/appointments/${id}`, { interview })//updates the state when the promise resolves
+
+    return axios.put(`/api/appointments/${id}`, { interview })
       .then((response) => {
-        // spotsRemaining('add')
-        // updateSpots(id)
-        setState({//overwriting the appointments/mutate
+        setState({
           ...state,
-          appointments,//updating state
+          appointments,
           days: updateSpots(state, appointments)
         })
-        //console.log("response =>", response)
       })
   };
-  //add cancelInerview function
-  //axios delete to delete interview
+
   function cancelInterview(id) {
-    //console.log(id);
     const appointment = {
       ...state.appointments[id],
       interview: null
     };
     const appointments = {
       ...state.appointments,
-      [id]: appointment//adding the appointment from the var above
+      [id]: appointment
     }
 
 
     return axios.delete(`/api/appointments/${id}`, appointment)
       .then((response) => {
-        setState({//modify state
+        setState({
           ...state,
           appointments,
           days: updateSpots(state, appointments)
@@ -88,14 +73,12 @@ export default function useApplicationData() {
       }
       )
   };
-  //console.log("daily", dailyAppointments);
-  //create function which updates the spots based on the add and delete
+
   const updateSpots = function (state, appointments) {
     return state.days.map(day => {
       if (day.name === state.day) {
         return {
           ...day,
-          //get the number of spots that do not have interview: null
           spots: day.appointments.map(id => appointments[id]).filter(({ interview }) => !interview).length,
         }
       }
