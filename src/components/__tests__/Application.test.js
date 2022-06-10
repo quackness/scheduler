@@ -33,14 +33,14 @@ it("changes the schedule when a new day is selected", async () => {
 
   //ByLabelText, ByPlaceholderText, ByText, ByDisplayValue, ByAltText, ByTitle and ByRole
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
-    const { container } = render (<Application />);
+    const { container, debug } = render (<Application />);
     //console.log("container>>>", container)
 
     await waitForElement(() => getByText(container, "Archie Cohen"));
     console.log("prettyDOM container", prettyDOM(container));
 
     const appointment = getAllByTestId(container, "appointment")[0];
-    console.log("prettyDOM appointment", prettyDOM(appointment));
+    
 
     fireEvent.click(getByAltText(appointment, "Add"));
 
@@ -51,8 +51,9 @@ it("changes the schedule when a new day is selected", async () => {
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
     
     fireEvent.click(getByText(appointment, "Save"));
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
-    console.log(prettyDOM(appointment));
+    console.log("prettyDOM appointment", prettyDOM(appointment));
 
 
 
