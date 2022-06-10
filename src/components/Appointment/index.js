@@ -12,7 +12,6 @@ import useVisualMode from "hooks/useVisualMode";
 
 
 export default function Appointment(props) {
-  console.log("props", props)
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -23,24 +22,21 @@ export default function Appointment(props) {
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
 
-  //add the custom hook
+
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
-  //Create a function called save in the Appointment component.
   function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
-    //Call the props.bookInterview function with the 
-    //appointment id and interview as arguments from within the save function.
-    //console.log("props.bookInterview", props.bookInterview(props.id, interview))
+
     transition(SAVING);
     props.bookInterview(props.id, interview)
-      .then(() => //interview is from the function save
-        transition(SHOW))//could this be done within the function pointers?
+      .then(() =>
+        transition(SHOW))
       .catch(() => transition(ERROR_SAVE, true));
   }
 
@@ -51,7 +47,7 @@ export default function Appointment(props) {
       .catch(() => transition(ERROR_DELETE, true))
   }
 
-  //when we need to change the interiview
+
   function editInterview() {
     transition(EDIT);
   }
@@ -65,7 +61,6 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onEdit={editInterview}
-          //instead of deleting it will go to the CONFIRM
           onDelete={() => transition(CONFIRM)}
         />
       )}
@@ -87,7 +82,7 @@ export default function Appointment(props) {
       {mode === CONFIRM && <Confirm
         message={"Are you sure you want to delete this interview?"}
         onConfirm={removeInterview}
-        onCancel={back}//back is coming from a custom hook
+        onCancel={back}
       />}
 
       {mode === EDIT && (<Form
@@ -111,5 +106,4 @@ export default function Appointment(props) {
   );
 }
 
-{/* <Show student="Lydia Miller-Jones" interviewer={interviewers[0].name} 
-    onEdit={action("onEdit")} onDelete={action("onDelete")} />) */}
+

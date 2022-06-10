@@ -7,8 +7,8 @@ export default function DayListItem(props) {
     'day-list__item--selected': props.selected,
     'day-list__item--full': props.spots === 0
   })
-  //fix the outputs to pass the tests
-  const formatSpots = function() {
+
+  const formatSpots = function () {
     if (props.spots === 0) {
       return "no spots remaining"
     } else if (props.spots === 1) {
@@ -20,13 +20,8 @@ export default function DayListItem(props) {
 
   return (
     <li data-testid="day" className={dayClass} onClick={() => props.setDay(props.name)}>
-    {/* https://flex-web.compass.lighthouselabs.ca/workbooks/flex-m07w17/activities/899?journey_step=54&workbook=22 */}
-    {/* <li className={dayClass} onClick={() => props.setDay(props.name)} selected={props.selected}></li> */}
-    {/* li is the day item */}
-      <h2 className="text--regular">{props.name}</h2> 
-      {/* <h3 className="text--light">{props.spots} spots remaining</h3> */}
+      <h2 className="text--regular">{props.name}</h2>
       <h3 className="text--light">{formatSpots()}</h3>
-      
     </li>
   );
 }

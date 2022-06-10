@@ -6,23 +6,6 @@ import Application from "components/Application";
 
 afterEach(cleanup);
 
-// xit("defaults to Monday and changes the schedule when a new day is selected", () => {
-//   const { getByText } = render(<Application />);
-
-//   return waitForElement(() => getByText('Monday'));
-// });
-
-//promise
-// it("defaults to Monday and changes the schedule when a new day is selected", () => {
-//   const { getByText } = render(<Application />);
-
-//   return waitForElement(() => getByText("Monday")).then(() => {
-//     fireEvent.click(getByText("Tuesday"));
-
-//     expect(getByText("Leopold Silvers")).toBeInTheDocument();
-//   });
-// });
-
 describe("Application", () => {
   it("changes the schedule when a new day is selected", async () => {
     const { getByText } = render(<Application />);
@@ -31,7 +14,6 @@ describe("Application", () => {
     expect(getByText("Leopold Silvers")).toBeInTheDocument();
   });
 
-  //ByLabelText, ByPlaceholderText, ByText, ByDisplayValue, ByAltText, ByTitle and ByRole
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
     const { container, debug } = render(<Application />);
   
@@ -49,8 +31,6 @@ describe("Application", () => {
 
     fireEvent.click(getByText(appointment, "Save"));
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
-
-    console.log("prettyDOM appointment", prettyDOM(appointment));
 
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 

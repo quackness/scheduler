@@ -1,4 +1,3 @@
-//import React, { useState, useEffect } from "react";
 import React from "react";
 import "components/Application.scss";
 import DayList from "components/DayList";
@@ -10,7 +9,6 @@ import useApplicationData from "hooks/useApplicationData";
 
 
 export default function Application(props) {
-  //state moved to hooks folder
   const {
     state,
     setDay,
@@ -35,8 +33,6 @@ export default function Application(props) {
         />);
     });
 
-  //passing a function as a prop: give a name example  cancelInterview = {cancelInterview}
-  //2. bookInterview = {() => example(a,b)}
 
   return (
     <main className="layout">
@@ -49,11 +45,9 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-
             days={state.days}
             value={state.day}
             onChange={setDay}
-
           />
         </nav>
         <img
