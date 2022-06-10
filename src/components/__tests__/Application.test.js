@@ -34,13 +34,10 @@ describe("Application", () => {
   //ByLabelText, ByPlaceholderText, ByText, ByDisplayValue, ByAltText, ByTitle and ByRole
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
     const { container, debug } = render(<Application />);
-    //console.log("container>>>", container)
-
+  
     await waitForElement(() => getByText(container, "Archie Cohen"));
-    console.log("prettyDOM container", prettyDOM(container));
 
     const appointment = getAllByTestId(container, "appointment")[0];
-
 
     fireEvent.click(getByAltText(appointment, "Add"));
 
@@ -54,27 +51,14 @@ describe("Application", () => {
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
     console.log("prettyDOM appointment", prettyDOM(appointment));
-    console.log("debug", prettyDOM(debug));
 
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday"));
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
-
-    console.log("prettyDOm day", prettyDOM(day));
-
   });
 });
 
 
 
-// tests: Render the Application. done
-// Wait until the text "Archie Cohen" is displayed.domne 
-// Click the "Add" button on the first empty appointment. done
-// Enter the name "Lydia Miller-Jones" into the input with the placeholder "Enter Student Name".done
-// Click the first interviewer in the list.done
-// Click the "Save" button on that same appointment.done
-// Check that the element with the text "Saving" is displayed.done
-// Wait until the element with the text "Lydia Miller-Jones" is displayed.
-// Check that the DayListItem with the text "Monday" also has the text "no spots remaining".
