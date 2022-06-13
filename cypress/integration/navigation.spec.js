@@ -3,11 +3,10 @@ describe("Navigation", () => {
     cy.visit("/");
   });
 
-  it("should navigate to Tuesday", () => {
+  it("finds the list item, clicks it and checks it for the correct background colour", () => {
     cy.visit("/");
-      cy.contains("[data-testid=day]", 'Tuesday')
+    cy.contains("[data-testid=day]", "Tuesday")
       .click()
       .should("have.class", "day-list__item--selected")
-
-  })
+  });
 });
