@@ -19,6 +19,7 @@ Install dependencies with `npm install`. Application defaults to http://localhos
 * React-scripts
 * Classnames
 * SASS
+* node v12.22.5
 
 ## Running Webpack Development Server
 
