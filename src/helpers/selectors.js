@@ -42,9 +42,6 @@ export function getInterviewersForDay(state, day) {
 
   const interviewersDetails = interviewersForTheDay.map(id => state.interviewers[id]);
 
-
   return interviewersDetails;
-
-
 };
 
