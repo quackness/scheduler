@@ -12,6 +12,5 @@
   command = "npm run build"
 
 [build.environment]
-  NODE_VERSION = "12.2.5"
   REACT_APP_API_BASE_URL = "https://kr-scheduler.herokuapp.com/"
   REACT_APP_WEBSOCKET_URL = "wss://kr-scheduler.herokuapp.com/"
